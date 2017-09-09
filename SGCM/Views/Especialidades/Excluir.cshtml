@@ -1,0 +1,27 @@
+﻿@model Especialidade
+
+@{
+    ViewBag.Title = "Excluir Especialidade";
+}
+
+<h2>Excluir Especialidade</h2>
+
+<h3>Você tem certeza que deseja excluir este registro?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.Partial("_BotoesExclusaoPadrao")
+    }
+</div>

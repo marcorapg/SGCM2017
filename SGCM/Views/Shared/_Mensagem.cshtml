@@ -1,0 +1,33 @@
+﻿@using SGCM.Models
+
+@if (TempData["Mensagem"] != null)
+{
+    var objetoMensagem = (Mensagem)@TempData["Mensagem"];
+    var classeMensagem = string.Empty;
+    var classeIcone = "mensagem-ico ";
+
+    <text>
+        @switch (objetoMensagem.TipoMensagem)
+        {
+            case TipoMensagem.Sucesso:
+                classeMensagem = "alert alert-success";
+                classeIcone += "glyphicon glyphicon-ok";
+                break;
+            case TipoMensagem.Erro:
+                classeMensagem = "alert alert-danger";
+                classeIcone += "glyphicon glyphicon-remove";
+                break;
+            case TipoMensagem.Informacao:
+                classeMensagem = "alert alert-info";
+                classeIcone += "glyphicon glyphicon-info-sign";
+                break;
+        }
+    </text>
+
+    <div class="@classeMensagem" role="alert">
+        <p>
+            <span class="@classeIcone" aria-hidden="true"></span>
+            <b>@objetoMensagem.TextoMensagem</b>
+        </p>
+    </div>
+}

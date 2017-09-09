@@ -1,0 +1,8 @@
+﻿@model HomeMedicoViewModel
+
+<h1>MÉDICO</h1>
+
+@foreach (var medico in Model.Medicos)
+{
+    <a href="@Url.Action("Index", "Agenda", new { medicoId = medico.Id })">@medico.Nome</a>
+}

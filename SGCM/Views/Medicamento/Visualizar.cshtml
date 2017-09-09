@@ -1,0 +1,22 @@
+﻿@model Medicamento
+
+@{
+    ViewBag.Title = "Visualizar Medicamento";
+}
+
+<h2>Visualizar Medicamento</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>@Html.DisplayNameFor(model => model.NomeGenerico)</dt>
+        <dd>@Html.DisplayFor(model => model.NomeGenerico)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.NomeFabrica)</dt>
+        <dd>@Html.DisplayFor(model => model.NomeFabrica)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.NomeFabricante)</dt>
+        <dd>@Html.DisplayFor(model => model.NomeFabricante)</dd>
+    </dl>
+</div>
+
+@Html.Partial("_BotoesVisualizarPadrao")

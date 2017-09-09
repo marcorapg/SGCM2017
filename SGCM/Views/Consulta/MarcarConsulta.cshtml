@@ -1,0 +1,73 @@
+﻿@model MarcarConsultaViewModel
+
+@section Scripts{
+    <script src="~/Scripts/Custom/MarcarConsulta.js" type="text/javascript"></script>
+}
+
+<input type="hidden" value="@Model.MedicoId" id="medicoId" />
+
+<h3>@Model.NomeMedico</h3>
+
+<div id='calendar'></div>
+
+<div id="modalEventoAgenda" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="formEventoAgenda" class="form-inline" action="" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" onclick="clearSelections()">&times;</button>
+                    <h4 class="modal-title">Consulta</h4>
+                </div>
+                <div class="modal-body">
+                        <div class="form-group">
+                            <input id="IdEventoAgenda" name="IdEventoAgenda" type="hidden">
+
+                            <input id="MedicoIdEventoAgenda" name="MedicoIdEventoAgenda" type="hidden" value="@Model.MedicoId">
+
+                            <input id="DataInicioEventoAgenda" name="DataInicioEventoAgenda" type="hidden">
+                            <input id="DataFimEventoAgenda" name="DataFimEventoAgenda" type="hidden">
+
+                            <div class="form-group col-md-4">
+                                <label class="control-label" for="DataEvento">Data</label>
+                                <input class="form-control text-box single-line" type="text" id="DataEvento" name="DataEvento" readonly>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label class="control-label" for="HorarioInicioEvento">Início</label>
+                                <input class="form-control text-box single-line" type="text" id="HorarioInicioEvento" name="HorarioInicioEvento" readonly>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label class="control-label" for="HorarioFimEvento">Fim</label>
+                                <input class="form-control text-box single-line" type="text" id="HorarioFimEvento" name="HorarioFimEvento" readonly>
+                            </div>
+
+                            
+                            <input id="PacienteIdEventoAgenda" name="PacienteIdEventoAgenda" type="hidden" data-val="true" data-val-required="Selecione um paciente cadastrado.">
+
+                            <div class="form-group col-md-12">
+                                <label class="control-label" for="Paciente">Paciente</label>
+                                <input class="form-control text-box single-line" type="text" id="Paciente" name="Paciente" data-toggle="tooltip" data-placement="top" title="Começe a digitar o nome do paciente e selecione um paciente cadastrado da lista exibida.">
+                                <span class="field-validation-valid text-danger" data-valmsg-for="PacienteIdEventoAgenda" data-valmsg-replace="true"></span>
+                            </div>
+
+                        </div>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal" id="botaoExcluir">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true">Excluir</span>
+                    </button>
+                        
+                    <a href="" class="btn btn-primary btn-md" role="button" id="botaoPaciente">
+                        <span class="glyphicon glyphicon-zoom-in" aria-hidden="true">Paciente</span>
+                    </a>
+
+                    <button type="submit" class="btn btn-primary btn-md" role="button" id="botaoSalvar">
+                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">Salvar</span>
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="clearSelections()">Fechar</button>                        
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

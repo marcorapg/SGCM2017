@@ -1,0 +1,67 @@
+﻿@model Medico
+
+@{
+    ViewBag.Title = "Alterar Médico";
+}
+
+<h2>Alterar Médico</h2>
+
+@using (Html.BeginForm("Alterar", "Medico", FormMethod.Post, new { @class = "form-inline" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.Id)
+
+    <fieldset class="border">
+        <legend class="border">Dados pessoais</legend>
+
+        <div class="form-group col-md-9">
+            @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-3">
+            @Html.LabelFor(model => model.CPF, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.CPF, new { htmlAttributes = new { @class = "form-control", data_mask = "000.000.000-00" } })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.CRM, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.CRM, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.EspecialidadeId, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.EspecialidadeId, (List<SelectListItem>)ViewBag.SelectListEspecialidade, "Selecione...", new { @class = "form-control" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.UserId, (List<SelectListItem>)ViewBag.SelectListUsuario, "Selecione...", new { @class = "form-control" })
+        </div>
+
+    </fieldset>
+
+    <fieldset class="border">
+        <legend class="border">Contato</legend>
+
+        <div class="form-group col-md-3">
+            @Html.LabelFor(model => model.TelefoneFixo, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.TelefoneFixo, new { htmlAttributes = new { @class = "form-control phone-mask" } })
+        </div>
+
+        <div class="form-group col-md-3">
+            @Html.LabelFor(model => model.TelefoneCelular, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.TelefoneCelular, new { htmlAttributes = new { @class = "form-control phone-mask" } })
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+
+    </fieldset>
+
+    @Html.Partial("_BotoesCRUDPadrao")
+}

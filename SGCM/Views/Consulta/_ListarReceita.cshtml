@@ -1,0 +1,28 @@
+﻿@model ICollection<Receita>
+
+<table class="table table-condensed">
+    <tr>
+        <th>#</th>
+        <th>Descrição</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Select((value, i) => new { i, value }))
+    {
+        <tr>
+            <td>@item.i + 1</td>
+            <td>@item.value.Descricao</td>
+            <td>
+                <div class="text-right">
+                    <a class="btn btn-primary btn-sm" href="@Url.Action("Visualizar", new { id = item.value.Id })" role="button">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true" data-toggle="tooltip" data-placement="auto" title="Visualizar"/>
+                    </a>
+
+                    <a class="btn btn-primary btn-sm" href="@Url.Action("Excluir", new { id = item.value.Id })" role="button">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="tooltip" data-placement="auto" title="Excluir"/>
+                    </a>
+                </div>
+            </td>
+        </tr>
+    }
+</table>

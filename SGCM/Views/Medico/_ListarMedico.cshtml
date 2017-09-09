@@ -1,0 +1,52 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+
+@model PagedList.IPagedList<Medico>
+
+<table class="table table-condensed">
+    <tr>
+        <th>#</th>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>CRM</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Select((value, i) => new { i, value }))
+    {
+        <tr>
+            <td>@ViewModelBase.CalculaIndiceRegistro(item.i, Model.PageNumber)</td>
+            <td>
+                @item.value.Nome
+            </td>
+            <td>
+                @item.value.CPF
+            </td>
+            <td>
+                @item.value.CRM
+            </td>
+            <td>
+                <div class="text-right">
+                    <a class="btn btn-primary btn-sm" href="@Url.Action("Alterar", new { id = item.value.Id })" role="button" data-toggle="tooltip" data-placement="auto" title="Alterar">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true" />
+                    </a>
+
+                    <a class="btn btn-primary btn-sm" href="@Url.Action("Visualizar", new { id = item.value.Id })" role="button" data-toggle="tooltip" data-placement="auto" title="Visualizar">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true" />
+                    </a>
+
+                    <a class="btn btn-primary btn-sm" href="@Url.Action("Excluir", new { id = item.value.Id })" role="button" data-toggle="tooltip" data-placement="auto" title="Excluir">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true" />
+                    </a>
+                </div>
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="container text-center">
+    Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+
+    @Html.PagedListPager(Model, Pagina => Url.Action("ListarPacientes", MedicoFiltroViewModel.RouteValuesPagina((RouteValueDictionary)ViewBag.RouteValues, Pagina)), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing("divListarMedico"))
+</div>
+

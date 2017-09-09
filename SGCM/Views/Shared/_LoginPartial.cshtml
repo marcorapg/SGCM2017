@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+
+            <li>
+                <a class="btn btn-secondary btn-lg" href="@Url.Action("Index", "Manage")" role="button" data-toggle="tooltip" data-placement="auto" title="Usuário">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true" />
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-secondary btn-lg" href="javascript:document.getElementById('logoutForm').submit()" role="button" data-toggle="tooltip" data-placement="auto" title="Sair">
+                    <span class="glyphicon glyphicon-log-out" aria-hidden="true"/>
+                </a>
+            </li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a class="btn btn-secondary btn-lg" href="@Url.Action("Register", "Account")" id = "registerLink" role="button"data-toggle="tooltip" data-placement="auto" title="Criar conta">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true" />
+            </a>
+        </li>
+        <li>
+            <a class="btn btn-secondary btn-lg" href="@Url.Action("Login", "Account")" id = "loginLink" role="button"data-toggle="tooltip" data-placement="auto" title="Entrar">
+                <span class="glyphicon glyphicon-log-in" aria-hidden="true" />
+            </a>
+        </li>
+    </ul>
+}

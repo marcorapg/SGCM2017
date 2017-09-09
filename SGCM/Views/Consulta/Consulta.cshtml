@@ -1,0 +1,92 @@
+﻿@model Consulta
+
+@using (Html.BeginForm("AlterarSituacaoConsulta", "Consulta", FormMethod.Post, new { @class = "form form-inline", role = "form" }))
+{
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.Situacao)
+
+    if (Model.Situacao == SituacaoConsulta.Pendente)
+    {
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary btn-md" role="button">
+                <span class="glyphicon glyphicon-play botao-ico" aria-hidden="true"></span>Iniciar consulta
+            </button>
+        </div>
+    }
+
+    if (Model.Situacao == SituacaoConsulta.Iniciada)
+    {
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary btn-md" role="button">
+                <span class="glyphicon glyphicon-check botao-ico" aria-hidden="true"></span>Finalizar consulta
+            </button>
+        </div>
+    }
+}
+
+<fieldset class="border">
+    <legend class="border">Informações da consulta</legend>
+
+    <div class="form-group col-md-3">
+        @Html.LabelFor(model => model.Data, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Data, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+    </div>
+    <div class="form-group col-md-3">
+        @Html.LabelFor(model => model.HoraInicio, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.HoraInicio, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+    </div>
+    <div class="form-group col-md-3">
+        @Html.LabelFor(model => model.HoraFim, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.HoraFim, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+    </div>
+    <div class="form-group col-md-3">
+        @Html.LabelFor(model => model.Situacao, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Situacao, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+    </div>
+</fieldset>
+
+<fieldset class="border">
+    <legend class="border">Informações do paciente</legend>
+
+    <div class="form-group col-md-6">
+        @Html.LabelFor(model => model.Paciente.Nome, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Paciente.Nome, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+    </div>
+    <div class="form-group col-md-3">
+        @Html.LabelFor(model => model.Paciente.CPF, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Paciente.CPF, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+    </div>
+    <div class="form-group col-md-3">
+        @Html.LabelFor(model => model.Paciente.DataNascimento, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.Paciente.DataNascimento, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+    </div>
+</fieldset>
+
+@if (Model.Situacao == SituacaoConsulta.Iniciada || Model.Situacao == SituacaoConsulta.Finalizada)
+{
+    <fieldset class="border">
+        <legend class="border">Receitas</legend>
+
+        <div class="text-right">
+            <a class="btn btn-primary btn-md" href="@Url.Action("IncluirReceita", "Receita", new { consultaId = Model.Id, pacienteId = Model.PacienteId })" role="button">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </a>
+        </div>
+
+        @Html.Partial("_ListarReceita", Model.Receitas)
+    </fieldset>
+
+    <fieldset class="border">
+        <legend class="border">Exames</legend>
+    </fieldset>
+
+    <fieldset class="border">
+        <legend class="border">Histórico médico</legend>
+    </fieldset>
+}
+
+<div class="text-right">
+    <a type="button" class="btn btn-primary btn-md" href="@Url.Action("Index", "Home")">
+        <span class="glyphicon glyphicon-arrow-left botao-ico"></span>Voltar
+    </a>
+</div>

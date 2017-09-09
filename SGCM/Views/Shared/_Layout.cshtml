@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@string.Format("{0} - {1}", "SGCM", ViewBag.Title)</title>
+
+    @Styles.Render("~/css")
+    @*@Styles.Render("~/fullcalendar")*@
+    <link href='~/Content/fullcalendar.min.css' rel='stylesheet' />
+    <link href='~/Content/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+    @Styles.Render("~/customcss")
+    @*@Styles.Render("~/jqueryui")*@
+    
+    <link href='~/Content/jquery-ui.min.css' rel='stylesheet' />
+    <link href='~/Content/jquery-ui.structure.min.css' rel='stylesheet' />
+    <link href='~/Content/jquery-ui.theme.min.css' rel='stylesheet' />
+
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("SGCM", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    
+                    @if (this.User.IsInRole("administrador"))
+                    {
+                        <li>@Html.ActionLink("Especialidades", "Index", "Especialidades")</li>
+                        <li>@Html.ActionLink("Medicamento", "Index", "Medicamento")</li>
+                        <li>@Html.ActionLink("Médico", "Index", "Medico")</li>
+                    }
+
+                    @if (this.User.IsInRole("medico"))
+                    {
+                        <li>@Html.ActionLink("Agenda", "Index", "Agenda")</li>
+                        <li>@Html.ActionLink("Visualizar Consultas", "VisualizarConsultas", "Consulta")</li>
+                        <li>@Html.ActionLink("Medicamento", "Index", "Medicamento")</li>
+                        <li>@Html.ActionLink("Médico", "Index", "Medico")</li>
+                        <li>@Html.ActionLink("Paciente", "Index", "Paciente")</li>
+                    }
+
+                    @if (this.User.IsInRole("secretario"))
+                    {
+                        <li>@Html.ActionLink("Paciente", "Index", "Paciente")</li>
+                        <li>@Html.ActionLink("Marcar Consulta", "MarcarConsulta", "Consulta")</li>
+                        <li>@Html.ActionLink("Consulta", "Index", "Consulta")</li>
+                    }
+
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @Html.Partial("_Mensagem")
+
+        @RenderBody()
+        <hr />
+    </div>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <p class="text-muted">@DateTime.Now.Year - Marco Gonçalves</p>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/fullcalendar")
+
+    <script src="~/Scripts/jquery.mask.min.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/Custom/Mask.js"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

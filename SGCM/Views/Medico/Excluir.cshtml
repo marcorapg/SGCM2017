@@ -1,0 +1,43 @@
+﻿@model Medico
+
+@{
+    ViewBag.Title = "Excluir Médico";
+}
+
+<h2>Excluir Médico</h2>
+
+<h3>Você tem certeza que deseja excluir este registro?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>@Html.DisplayNameFor(model => model.Nome)</dt>
+        <dd>@Html.DisplayFor(model => model.Nome)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.CPF)</dt>
+        <dd>@Html.DisplayFor(model => model.CPF)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.CRM)</dt>
+        <dd>@Html.DisplayFor(model => model.CRM)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.Especialidade.Descricao)</dt>
+        <dd>@Html.DisplayFor(model => model.Especialidade.Descricao)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.Usuario.Email)</dt>
+        <dd>@Html.DisplayFor(model => model.Usuario.Email)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.TelefoneFixo)</dt>
+        <dd>@Html.DisplayFor(model => model.TelefoneFixo)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.TelefoneFixo)</dt>
+        <dd>@Html.DisplayFor(model => model.TelefoneFixo)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.Email)</dt>
+        <dd>@Html.DisplayFor(model => model.Email)</dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.Partial("_BotoesExclusaoPadrao")
+    }
+</div>

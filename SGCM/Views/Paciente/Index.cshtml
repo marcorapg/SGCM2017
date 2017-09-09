@@ -1,0 +1,70 @@
+﻿@model PacienteFiltroViewModel
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#formFiltroPaciente").submit(function (e) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/SGCM/Paciente/ListarPacientes',
+                    data: $('#formFiltroPaciente').serialize(),
+                    success: function (data) {
+                        $('#divListarPaciente').html(data);
+                    }
+                });
+
+                e.preventDefault();
+            });
+        });
+    </script>
+}
+
+@{
+    ViewBag.Title = "Pacientes";
+}
+
+<h2>Pacientes</h2>
+
+@using (Html.BeginForm("Index", "Paciente", FormMethod.Get, new { @class = "form", role = "form", id = "formFiltroPaciente" }))
+{
+    <fieldset class="border">
+        <legend class="border">Pesquisa</legend>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.TextBoxFor(prop => prop.Nome, new { @class = "form-control", placeholder = "Nome" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Html.TextBoxFor(prop => prop.CPF, new { @class = "form-control", placeholder = "CPF", data_mask = "000.000.000-00" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Html.TextBoxFor(prop => prop.DataNascimento, new { @class = "form-control", placeholder = "Data de nascimento", data_mask = "00/00/0000" })
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group pull-right">
+                    <button type="submit" class="btn btn-primary btn-md" role="button" data-toggle="tooltip" data-placement="auto" title="Pesquisar">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true" />
+                    </button>
+                    <button type="reset" class="btn btn-primary btn-md" role="button" data-toggle="tooltip" data-placement="auto" title="Limpar">
+                        <span class="glyphicon glyphicon-erase" aria-hidden="true" />
+                    </button>
+                    <a class="btn btn-primary btn-md" href="@Url.Action("Incluir")" role="button" data-toggle="tooltip" data-placement="auto" title="Incluir paciente">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+}
+
+<br />
+
+<div id="divListarPaciente">
+    @Html.Action("ListarPacientes")
+</div>

@@ -1,0 +1,63 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+
+@model EspecialidadeFiltroViewModel
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#formFiltroEspecialidade").submit(function (e) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/SGCM/Especialidades/ListarEspecialidades',
+                    data: $('#formFiltroEspecialidade').serialize(),
+                    success: function (data) {
+                        $('#divListarEspecialidade').html(data);
+                    }
+                });
+
+                e.preventDefault();
+            });
+        });
+    </script>
+}
+
+@{
+    ViewBag.Title = "Especialidades";
+}
+
+<h2>Especialidades</h2>
+
+@using (Html.BeginForm("ListarEspecialidades", "Especialidades", FormMethod.Get, new { @class = "form", role = "form", id = "formFiltroEspecialidade" }))
+{
+    <fieldset class="border">
+        <legend class="border">Pesquisa</legend>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-group">
+                    @Html.TextBoxFor(prop => prop.Descricao, new { @class = "form-control", placeholder = "Descrição" })
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group pull-right">
+                    <button type="submit" class="btn btn-primary btn-md" role="button" data-toggle="tooltip" data-placement="auto" title="Pesquisar">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true" />
+                    </button>
+                    <button type="reset" class="btn btn-primary btn-md" role="button" data-toggle="tooltip" data-placement="auto" title="Limpar">
+                        <span class="glyphicon glyphicon-erase" aria-hidden="true" />
+                    </button>
+                    <a class="btn btn-primary btn-md" href="@Url.Action("Incluir")" role="button" data-toggle="tooltip" data-placement="auto" title="Incluir medicamento">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+}
+
+<br />
+
+<div id="divListarEspecialidade">
+    @Html.Action("ListarEspecialidades")
+</div>
