@@ -32,13 +32,13 @@
         </div>
 
         <div class="form-group col-md-4">
-            @Html.LabelFor(model => model.Especialidade, htmlAttributes: new { @class = "control-label" })
-            @Html.DropDownListFor(model => model.Especialidade, (List<SelectListItem>)ViewBag.SelectListEspecialidade, "Selecione...", new { @class = "form-control" })
+            @Html.LabelFor(model => model.EspecialidadeId, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.EspecialidadeId, (List<SelectListItem>)ViewBag.SelectListEspecialidade, "Selecione...", new { @class = "form-control" })
         </div>
 
         <div class="form-group col-md-4">
-            @Html.LabelFor(model => model.Usuario, htmlAttributes: new { @class = "control-label" })
-            @Html.DropDownListFor(model => model.Usuario, (List<SelectListItem>)ViewBag.SelectListUsuario, "Selecione...", new { @class = "form-control" })
+            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.UserId, (List<SelectListItem>)ViewBag.SelectListUsuario, "Selecione...", new { @class = "form-control" })
         </div>
 
     </fieldset>

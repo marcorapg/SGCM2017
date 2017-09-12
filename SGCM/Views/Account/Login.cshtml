@@ -12,7 +12,7 @@
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                <h4>Use a local account to log in.</h4>
+                <h4>Digite seu login e senha</h4>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
@@ -48,11 +48,28 @@
     <div class="col-md-4">
         <section id="informacao">
             <div>
-                <p>
-                    aaaaa
-                    aaaaa
-                    aaaaa
-                </p>
+                <ul>
+                    <li>
+                        Administrador
+                        <p><b>Login:</b> administrador@sgcm.com</p>
+                        <p><b>Senha:</b> Senh@1</p>
+                    </li>
+                    <li>
+                        Médico 1
+                        <p><b>Login:</b> medico1@sgcm.com</p>
+                        <p><b>Senha:</b> Senh@1</p>
+                    </li>
+                    <li>
+                        Médico 2
+                        <p><b>Login:</b> medico2@sgcm.com</p>
+                        <p><b>Senha:</b> Senh@1</p>
+                    </li>
+                    <li>
+                        Secretário
+                        <p><b>Login:</b> secretario@sgcm.com</p>
+                        <p><b>Senha:</b> Senha@1</p>
+                    </li>
+                </ul>
             </div>
         </section>
     </div>

@@ -151,15 +151,41 @@ namespace SGCM.Controllers
 
             foreach (var itemConsulta in itensConsulta)
             {
+                string color = string.Empty, textColor = string.Empty;
+
+                switch (itemConsulta.Situacao)
+                {
+                    case SituacaoConsulta.Pendente:
+                        textColor = "white";
+                        color = "blue";
+                        break;
+
+                    case SituacaoConsulta.Iniciada:
+                        textColor = "black";
+                        color = "yellow";
+                        break;
+
+                    case SituacaoConsulta.Finalizada:
+                        textColor = "black";
+                        color = "#41a931";
+                        break;
+
+                    case SituacaoConsulta.Cancelada:
+                        textColor = "black";
+                        color = "#52ecf3";
+                        break;
+                };
+
                 itensEvento.Add(new EventoModel()
                 {
                     id = itemConsulta.Id,
                     title = itemConsulta.Paciente.Nome,
                     start = new DataHora(itemConsulta.DataInicio.Value).ToString(),
                     end = new DataHora(itemConsulta.DataFim.Value).ToString(),
-                    color = "blue",
+                    color = color,
                     pacienteId = itemConsulta.PacienteId,
-                    url = Url.Action("Consulta", "Consulta", new { consultaId = itemConsulta.Id })
+                    url = Url.Action("Consulta", "Consulta", new { consultaId = itemConsulta.Id }),
+                    textColor = textColor
                 });
             }
 

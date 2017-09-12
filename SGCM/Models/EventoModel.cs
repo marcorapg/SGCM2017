@@ -26,5 +26,7 @@ namespace SGCM.Models
         public string pacienteId { get; set; }
 
         public string url { get; set; }
+
+        public string textColor { get; set; }
     }
 }
