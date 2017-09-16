@@ -2,35 +2,17 @@
 
 @section Scripts {
     <script type="text/javascript">
-        //Autocomplete paciente
-        $("#Paciente").autocomplete({
-            source: "/SGCM/Paciente/BuscarPacienteAutocomplete",
+        //Autocomplete
+        $("#Medicamento").autocomplete({
+            source: '@Url.Action("BuscarMedicamentoAutocomplete", "Medicamento")',
             minLength: 1,
             select: function (event, ui) {
-                $('#PacienteId').val(ui.item.id);
+                $('#MedicamentoId').val(ui.item.id);
             },
             change: function (event, ui) {
-                if (!ui.item) {
+                if(!ui.item){
                     $(event.target).val("");
-                    $('#PacienteId').val("");
-                }
-            },
-            focus: function (event, ui) {
-                return false;
-            }
-        });
-
-        //Autocomplete médico
-        $("#Medico").autocomplete({
-            source: "/SGCM/Medico/BuscarMedicoAutocomplete",
-            minLength: 1,
-            select: function (event, ui) {
-                $('#MedicoId').val(ui.item.id);
-            },
-            change: function (event, ui) {
-                if (!ui.item) {
-                    $(event.target).val("");
-                    $('#MedicoId').val("");
+                    $('#MedicamentoId').val("");
                 }
             },
             focus: function (event, ui) {
@@ -41,41 +23,84 @@
 }
 
 @{
-    ViewBag.Title = "Alterar Medicamento";
+    ViewBag.Title = "Alterar Receita";
 }
 
-<h2>Alterar Medicamento</h2>
+<h2>Alterar Receita</h2>
 
 @using (Html.BeginForm("Alterar", "Medicamento", FormMethod.Post, new { @class = "form-inline" }))
 {
-    @Html.AntiForgeryToken()
-
-    @Html.HiddenFor(model => model.Id)
-
-    <input id="PacienteId" name="PacienteId" type="hidden" data-val="true" data-val-required="Selecione um paciente cadastrado.">
-    <input id="MedicoId" name="MedicoId" type="hidden" data-val="true" data-val-required="Selecione um médico cadastrado.">
-
     <fieldset class="border">
         <legend class="border">Informações</legend>
 
         <div class="form-group col-md-4">
             @Html.LabelFor(model => model.Data, htmlAttributes: new { @class = "control-label" })
-            @Html.EditorFor(model => model.Data, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Data, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Data, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @type = "date", @Value = Model.Data.Value.ToString("yyyy-MM-dd") } })
         </div>
 
         <div class="form-group col-md-4">
-            <label class="control-label" for="Paciente">Paciente</label>
-            <input class="form-control text-box single-line" type="text" id="Paciente" name="Paciente" required data-toggle="tooltip" data-placement="top" title="Começe a digitar o nome do paciente e selecione um item da lista exibida.">
-            <span class="field-validation-valid text-danger" data-valmsg-for="PacienteId" data-valmsg-replace="true"></span>
+            @Html.LabelFor(model => model.Paciente.Nome, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Paciente.Nome, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
         </div>
 
         <div class="form-group col-md-4">
-            <label class="control-label" for="Paciente">Medicamento</label>
-            <input class="form-control text-box single-line" type="text" id="Medicamento" name="Medicamento" required data-toggle="tooltip" data-placement="top" title="Começe a digitar o nome do médico e selecione um item da lista exibida.">
-            <span class="field-validation-valid text-danger" data-valmsg-for="MedicamentoId" data-valmsg-replace="true"></span>
+            @Html.LabelFor(model => model.Medico.Nome, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Medico.Nome, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
         </div>
     </fieldset>
 
-    @Html.Partial("_BotoesCRUDPadrao")
+    <fieldset class="border">
+        <legend class="border">Medicamento da receita</legend>
+        @if(Model.ItemReceita != null && Model.ItemReceita.Count > 0)
+        {
+            @Html.DisplayFor(prop => prop.ItemReceita)
+        }
+        else
+        {
+            <p class="text-center">Não existem mecadimentos cadastrados para esta receita</p>
+        }
+    </fieldset>
 }
+
+@using (Html.BeginForm("SalvarItemReceita", "Receita", FormMethod.Post, new { @class = "form", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.PacienteId)
+    @Html.HiddenFor(model => model.MedicoId)
+
+    <fieldset class="border">
+        <legend class="border">Incluir medicamento</legend>
+
+        <input id="MedicamentoId" name="MedicamentoId" type="hidden" data-val="true" data-val-required="Selecione um medicamento cadastrado.">
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="control-label" for="Paciente">Medicamento</label>
+                <input class="form-control text-box single-line" type="text" id="Medicamento" name="Medicamento" required data-toggle="tooltip" data-placement="top" title="Começe a digitar o nome do medicamento e selecione um item da lista exibida.">
+                <span class="field-validation-valid text-danger" data-valmsg-for="MedicamentoId" data-valmsg-replace="true"></span>
+            </div>
+
+            <div class="form-group col-md-12">
+                <label class="control-label" for="Observacao">Observação</label>
+                <textarea class="form-control text-box" type="text" id="Observacao" name="Observacao" required data-val="true" data-val-required="O campo Observação é obrigatório." aria-required="true" aria-describedby="Observacao-error" aria-invalid="false"></textarea>
+                <span class="field-validation-valid text-danger" data-valmsg-for="Observacao" data-valmsg-replace="true"></span>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary btn-md">
+                <span class="glyphicon glyphicon-floppy-disk botao-ico"></span>Salvar
+            </button>
+        </div>
+    </fieldset>
+}
+
+<div class="text-right">
+    <a type="button" class="btn btn-primary btn-md" href="@Url.Action("Index")">
+        <span class="glyphicon glyphicon-arrow-left botao-ico"></span>Voltar
+    </a>
+</div>

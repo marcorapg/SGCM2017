@@ -1,22 +1,28 @@
-﻿@model Medicamento
+﻿@model Receita
 
 @{
-    ViewBag.Title = "Excluir Medicamento";
+    ViewBag.Title = "Excluir Receita";
 }
 
-<h2>Excluir Medicamento</h2>
+<h2>Excluir Receita</h2>
 
 <h3>Você tem certeza que deseja excluir este registro?</h3>
 <div>
     <dl class="dl-horizontal">
-        <dt>@Html.DisplayNameFor(model => model.NomeGenerico)</dt>
-        <dd>@Html.DisplayFor(model => model.NomeGenerico)</dd>
+        <dt>@Html.DisplayNameFor(model => model.Data)</dt>
+        <dd>@Model.Data.Value.ToShortDateString()</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.NomeFabrica)</dt>
-        <dd>@Html.DisplayFor(model => model.NomeFabrica)</dd>
+        <dt>Nome do paciente</dt>
+        <dd>@Html.DisplayFor(model => model.Paciente.Nome)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.NomeFabricante)</dt>
-        <dd>@Html.DisplayFor(model => model.NomeFabricante)</dd>
+        <dt>Nome do médico</dt>
+        <dd>@Html.DisplayFor(model => model.Medico.Nome)</dd>
+
+        @foreach (var itemReceita in Model.ItemReceita)
+        {
+            <dt>Medicamento</dt>
+            <dd>@itemReceita.Medicamento.Descricao - @itemReceita.Observacao</dd>
+        }
     </dl>
 
     @using (Html.BeginForm())

@@ -4,6 +4,37 @@
     ViewBag.Title = "Imprimir";
 }
 
-<h2>Imprimir</h2>
+<h2>Receita médica</h2>
 
-@Model.Data
+<p>
+    <b>@(Model.Paciente.Nome),</b>
+</p>
+
+<br/>
+
+@foreach (var itemReceita in Model.ItemReceita)
+{
+    <ul>
+        <li>
+            @string.Format("{0} ({1})", itemReceita.Medicamento.NomeFabrica, itemReceita.Medicamento.NomeGenerico)
+            <br/>
+            @itemReceita.Observacao
+        </li>
+    </ul>
+}
+
+<br />
+
+<p class="text-center">
+    <span>@Model.Medico.Nome</span>
+    <br />
+    <span>CRM: @Model.Medico.CRM</span>
+</p>
+
+<br />
+<br />
+<br />
+
+<p class="text-center">
+    <span>@Model.Medico.Nome / @Model.Medico.TelefoneFixo / @Model.Medico.TelefoneCelular</span>
+</p>

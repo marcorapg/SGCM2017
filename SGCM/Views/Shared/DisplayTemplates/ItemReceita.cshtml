@@ -1,16 +1,18 @@
 ﻿@model ItemReceita
 
-<li class="list-group-item">
-    <div class="row">
-        <div class="col-md-11">
-            <h4 class="list-group-item-heading">
-                @Html.DisplayFor(prop => prop.Medicamento.Descricao)
-            </h4>
-        </div>
-    </div>
-    <div class="col-md-12">
-        <p class="list-group-item-text">
-            @Html.DisplayFor(prop => prop.Observacao)
-        </p>
-    </div>
-</li>
+<div class="col-md-11">
+    <h4 class="list-group-item-heading">
+        @Html.DisplayFor(prop => prop.Medicamento.Descricao)
+    </h4>
+</div>
+<div class="col-md-1 text-right">
+    <a class="btn btn-primary btn-sm" href="@Url.Action("ExcluirItemReceita", "Receita", new { id = Model.Id })" role="button" data-toggle="tooltip" data-placement="auto" title="Excluir">
+        <span class="glyphicon glyphicon-trash" aria-hidden="true" />
+    </a>
+</div>
+
+<div class="col-md-12">
+    <p class="list-group-item-text">
+        @Html.DisplayFor(prop => prop.Observacao)
+    </p>
+</div>

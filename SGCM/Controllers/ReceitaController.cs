@@ -131,6 +131,11 @@ namespace SGCM.Controllers
             if (receita == null)
                 return HttpNotFound();
 
+            foreach (var itemReceita in receita.ItemReceita)
+            {
+                itensReceita.Delete(itensReceita.FindBy(prop => prop.Id == itemReceita.Id).FirstOrDefault());
+            }
+
             receitas.Delete(receita);
             receitas.Save();
 
@@ -143,50 +148,46 @@ namespace SGCM.Controllers
         {
             Receita receita = receitas.FindBy(prop => prop.Id == id).FirstOrDefault();
             return new ViewAsPdf("Imprimir", receita);
+            //return View("Imprimir", receita);
         }
 
-        //public ActionResult IncluirReceita(string consultaId, string pacienteId)
-        //{
-        //    Receita receita = new Receita()
-        //    {
-        //        //ConsultaId = consultaId,
-        //        PacienteId = pacienteId
-        //    };
+        public ActionResult SalvarItemReceita(Receita receita, string medicamentoId, string observacao)
+        {
+            if (string.IsNullOrEmpty(receita.Id))
+            {
+                receita.Id = Guid.NewGuid().ToString();
+                receitas.Add(receita);
+                receitas.Save();
+            }
 
-        //    return View("Receita", receita);
-        //}
+            ItemReceita itemReceita = new ItemReceita()
+            {
+                Id = Guid.NewGuid().ToString(),
+                ReceitaId = receita.Id,
+                MedicamentoId = medicamentoId,
+                Observacao = observacao
+            };
 
-        //public ActionResult EditarReceita(string receitaId)
-        //{
-        //    Receita receita = receitas.FindBy(prop => prop.Id == receitaId).FirstOrDefault();
+            itensReceita.Add(itemReceita);
+            itensReceita.Save();
 
-        //    if (receita == null)
-        //        return HttpNotFound();
+            ConfiguraMensagem(TipoMensagem.Sucesso, "Item da receita incluído com sucesso!");
 
-        //    return View("Receita", receita);
-        //}
+            return RedirectToAction("Alterar", "Receita", new { id = receita.Id });
+        }
 
-        //public ActionResult SalvarItemReceita(Receita receita, string medicamentoId, string observacao)
-        //{
-        //    if (string.IsNullOrEmpty(receita.Id))
-        //    {
-        //        receita.Id = Guid.NewGuid().ToString();
-        //        receitas.Add(receita);
-        //        receitas.Save();
-        //    }
+        public ActionResult ExcluirItemReceita(string id)
+        {
+            ItemReceita itemReceita = itensReceita.FindBy(prop => prop.Id == id).FirstOrDefault();
 
-        //    ItemReceita itemReceita = new ItemReceita()
-        //    {
-        //        Id = Guid.NewGuid().ToString(),
-        //        ReceitaId = receita.Id,
-        //        MedicamentoId = medicamentoId,
-        //        Observacao = observacao
-        //    };
+            string idReceita = itemReceita.Receita.Id;
 
-        //    itensReceita.Add(itemReceita);
-        //    itensReceita.Save();
+            itensReceita.Delete(itemReceita);
+            itensReceita.Save();
 
-        //    return RedirectToAction("EditarReceita", "Receita", new { receitaId = receita.Id } );
-        //}
+            ConfiguraMensagem(TipoMensagem.Sucesso, "Item da receita excluído com sucesso!");
+
+            return RedirectToAction("Alterar", "Receita", new { id = idReceita });
+        }
     }
 }

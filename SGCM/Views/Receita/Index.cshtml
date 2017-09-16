@@ -19,25 +19,25 @@
 
         //Autocomplete paciente
         $("#Paciente").autocomplete({
-            source: "/SGCM/Paciente/BuscarPacienteAutocomplete",
+            source: '@Url.Action("BuscarPacienteAutocomplete", "Paciente")',
             minLength: 1,
             select: function (event, ui) {
                 $('#PacienteId').val(ui.item.id);
-            },
+                    },
             change: function (event, ui) {
-                if (!ui.item) {
+                        if (!ui.item) {
                     $(event.target).val("");
                     $('#PacienteId').val("");
-                }
-            },
+                    }
+                },
             focus: function (event, ui) {
-                return false;
-            }
-        });
+                    return false;
+                }
+            });
 
         //Autocomplete médico
         $("#Medico").autocomplete({
-            source: "/SGCM/Medico/BuscarMedicoAutocomplete",
+            source: "@Url.Action("BuscarMedicoAutocomplete", "Medico")",
             minLength: 1,
             select: function (event, ui) {
                 $('#MedicoId').val(ui.item.id);
