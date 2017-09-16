@@ -22,11 +22,12 @@ namespace SGCM.Models
     
         public string Id { get; set; }
         public string PacienteId { get; set; }
-        public string ConsultaId { get; set; }
+        public string MedicoId { get; set; }
+        public Nullable<System.DateTime> Data { get; set; }
     
-        public virtual Consulta Consulta { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ItemReceita> ItemReceita { get; set; }
         public virtual Paciente Paciente { get; set; }
+        public virtual Medico Medico { get; set; }
     }
 }

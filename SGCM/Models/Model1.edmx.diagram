@@ -7,7 +7,7 @@
       <Diagram DiagramId="f261efb3b0444647ace168b6b46157e7" Name="Diagram1">
         <EntityTypeShape EntityType="sgcmModel.Papeis" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="sgcmModel.Usuario" Width="1.5" PointX="0.5" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="sgcmModel.Especialidade" Width="1.5" PointX="0.5" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="sgcmModel.Especialidade" Width="1.5" PointX="0.5" PointY="11.375" IsExpanded="true" />
         <EntityTypeShape EntityType="sgcmModel.Medico" Width="1.5" PointX="0.5" PointY="6.625" IsExpanded="true" />
         <AssociationConnector Association="sgcmModel.FK_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="sgcmModel.FK_EspecialidadeId" ManuallyRouted="false" />
@@ -23,17 +23,17 @@
         <EntityTypeShape EntityType="sgcmModel.Exame" Width="1.5" PointX="3" PointY="3" />
         <EntityTypeShape EntityType="sgcmModel.ItemReceita" Width="1.5" PointX="10.625" PointY="3.875" />
         <EntityTypeShape EntityType="sgcmModel.Receita" Width="1.5" PointX="10.625" PointY="7.5" />
-        <AssociationConnector Association="sgcmModel.FK_Receita_Consulta" />
         <AssociationConnector Association="sgcmModel.FK_ItemReceita_Medicamento" />
         <AssociationConnector Association="sgcmModel.FK_ItemReceita_Receita" />
         <AssociationConnector Association="sgcmModel.FK_Receita_Paciente" ></AssociationConnector>
         <EntityTypeShape EntityType="sgcmModel.TipoExame" Width="1.5" PointX="3" PointY="0.5" />
         <AssociationConnector Association="sgcmModel.FK_Exame_Paciente" />
         <AssociationConnector Association="sgcmModel.FK_Exame_TipoExame" />
-        <AssociationConnector Association="sgcmModel.FK_Exame_Consulta" />
         <EntityTypeShape EntityType="sgcmModel.Historico" Width="1.5" PointX="7.375" PointY="6" />
-        <AssociationConnector Association="sgcmModel.FK_Historico_Consulta" />
         <AssociationConnector Association="sgcmModel.FK_Historico_Paciente" />
+        <AssociationConnector Association="sgcmModel.FK_Exame_Medico" />
+        <AssociationConnector Association="sgcmModel.FK_Historico_Medico" />
+        <AssociationConnector Association="sgcmModel.FK_Receita_Medico" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

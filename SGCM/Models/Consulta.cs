@@ -14,14 +14,6 @@ namespace SGCM.Models
     
     public partial class Consulta
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Consulta()
-        {
-            this.Receitas = new HashSet<Receita>();
-            this.Exames = new HashSet<Exame>();
-            this.Historicos = new HashSet<Historico>();
-        }
-    
         public string Id { get; set; }
         public string PacienteId { get; set; }
         public string MedicoId { get; set; }
@@ -31,11 +23,5 @@ namespace SGCM.Models
     
         public virtual Medico Medico { get; set; }
         public virtual Paciente Paciente { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Receita> Receitas { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Exame> Exames { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Historico> Historicos { get; set; }
     }
 }

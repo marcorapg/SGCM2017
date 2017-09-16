@@ -130,7 +130,6 @@ namespace SGCM.Controllers
             return RedirectToAction("Index");
         }
 
-
         public ActionResult BuscarMedicamentoAutocomplete(string term)
         {
             var listaMedicamentos = medicamentos.FindBy(prop => prop.NomeGenerico.ToUpper().StartsWith(term.ToUpper()))

@@ -72,17 +72,17 @@
           <Property Name="TipoExameId" Type="varchar" MaxLength="128" />
           <Property Name="PacienteId" Type="varchar" MaxLength="128" />
           <Property Name="Situacao" Type="int" />
-          <Property Name="ConsultaId" Type="varchar" MaxLength="128" />
+          <Property Name="MedicoId" Type="varchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="historico">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
-          <Property Name="ConsultaId" Type="varchar" MaxLength="128" Nullable="false" />
           <Property Name="PacienteId" Type="varchar" MaxLength="128" Nullable="false" />
           <Property Name="Data" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="Descricao" Type="longtext" />
+          <Property Name="MedicoId" Type="varchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="item_receita">
           <Key>
@@ -143,7 +143,8 @@
           </Key>
           <Property Name="Id" Type="varchar" MaxLength="128" Nullable="false" />
           <Property Name="PacienteId" Type="varchar" MaxLength="128" Nullable="false" />
-          <Property Name="ConsultaId" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="MedicoId" Type="varchar" MaxLength="128" />
+          <Property Name="Data" Type="datetime" Precision="0" />
         </EntityType>
         <EntityType Name="tipo_exame">
           <Key>
@@ -214,15 +215,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Exame_Consulta">
-          <End Role="consulta" Type="Self.consulta" Multiplicity="0..1" />
+        <Association Name="FK_Exame_Medico">
+          <End Role="medico" Type="Self.medico" Multiplicity="0..1" />
           <End Role="exame" Type="Self.exame" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="consulta">
+            <Principal Role="medico">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="exame">
-              <PropertyRef Name="ConsultaId" />
+              <PropertyRef Name="MedicoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -250,15 +251,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Historico_Consulta">
-          <End Role="consulta" Type="Self.consulta" Multiplicity="1" />
+        <Association Name="FK_Historico_Medico">
+          <End Role="medico" Type="Self.medico" Multiplicity="0..1" />
           <End Role="historico" Type="Self.historico" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="consulta">
+            <Principal Role="medico">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="historico">
-              <PropertyRef Name="ConsultaId" />
+              <PropertyRef Name="MedicoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -298,15 +299,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Receita_Consulta">
-          <End Role="consulta" Type="Self.consulta" Multiplicity="1" />
+        <Association Name="FK_Receita_Medico">
+          <End Role="medico" Type="Self.medico" Multiplicity="0..1" />
           <End Role="receita" Type="Self.receita" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="consulta">
+            <Principal Role="medico">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="receita">
-              <PropertyRef Name="ConsultaId" />
+              <PropertyRef Name="MedicoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -383,8 +384,8 @@
             <End Role="especialidade" EntitySet="especialidade" />
             <End Role="medico" EntitySet="medico" />
           </AssociationSet>
-          <AssociationSet Name="FK_Exame_Consulta" Association="Self.FK_Exame_Consulta">
-            <End Role="consulta" EntitySet="consulta" />
+          <AssociationSet Name="FK_Exame_Medico" Association="Self.FK_Exame_Medico">
+            <End Role="medico" EntitySet="medico" />
             <End Role="exame" EntitySet="exame" />
           </AssociationSet>
           <AssociationSet Name="FK_Exame_Paciente" Association="Self.FK_Exame_Paciente">
@@ -395,8 +396,8 @@
             <End Role="tipo_exame" EntitySet="tipo_exame" />
             <End Role="exame" EntitySet="exame" />
           </AssociationSet>
-          <AssociationSet Name="FK_Historico_Consulta" Association="Self.FK_Historico_Consulta">
-            <End Role="consulta" EntitySet="consulta" />
+          <AssociationSet Name="FK_Historico_Medico" Association="Self.FK_Historico_Medico">
+            <End Role="medico" EntitySet="medico" />
             <End Role="historico" EntitySet="historico" />
           </AssociationSet>
           <AssociationSet Name="FK_Historico_Paciente" Association="Self.FK_Historico_Paciente">
@@ -411,8 +412,8 @@
             <End Role="receita" EntitySet="receita" />
             <End Role="item_receita" EntitySet="item_receita" />
           </AssociationSet>
-          <AssociationSet Name="FK_Receita_Consulta" Association="Self.FK_Receita_Consulta">
-            <End Role="consulta" EntitySet="consulta" />
+          <AssociationSet Name="FK_Receita_Medico" Association="Self.FK_Receita_Medico">
+            <End Role="medico" EntitySet="medico" />
             <End Role="receita" EntitySet="receita" />
           </AssociationSet>
           <AssociationSet Name="FK_Receita_Paciente" Association="Self.FK_Receita_Paciente">
@@ -483,6 +484,9 @@
           <Property Name="TelefoneFixo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="TelefoneCelular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="exame" Relationship="sgcmModel.FK_Exame_Medico" FromRole="Medico" ToRole="Exame" />
+          <NavigationProperty Name="historico" Relationship="sgcmModel.FK_Historico_Medico" FromRole="Medico" ToRole="Historico" />
+          <NavigationProperty Name="receita" Relationship="sgcmModel.FK_Receita_Medico" FromRole="Medico" ToRole="Receita" />
         </EntityType>
         <Association Name="FK_UserId">
           <End Role="aspnetusers" Type="sgcmModel.Usuario" Multiplicity="0..1" />
@@ -548,10 +552,6 @@
           <EntitySet Name="exame" EntityType="sgcmModel.Exame" />
           <EntitySet Name="item_receita" EntityType="sgcmModel.ItemReceita" />
           <EntitySet Name="receita" EntityType="sgcmModel.Receita" />
-          <AssociationSet Name="FK_Receita_Consulta" Association="sgcmModel.FK_Receita_Consulta">
-            <End Role="Consulta" EntitySet="Consulta" />
-            <End Role="receita" EntitySet="receita" />
-          </AssociationSet>
           <AssociationSet Name="FK_ItemReceita_Medicamento" Association="sgcmModel.FK_ItemReceita_Medicamento">
             <End Role="Medicamento" EntitySet="medicamento" />
             <End Role="item_receita" EntitySet="item_receita" />
@@ -573,18 +573,22 @@
             <End Role="tipo_exame" EntitySet="tipo_exame" />
             <End Role="Exame" EntitySet="exame" />
           </AssociationSet>
-          <AssociationSet Name="FK_Exame_Consulta" Association="sgcmModel.FK_Exame_Consulta">
-            <End Role="Consulta" EntitySet="Consulta" />
-            <End Role="Exame" EntitySet="exame" />
-          </AssociationSet>
           <EntitySet Name="historico" EntityType="sgcmModel.Historico" />
-          <AssociationSet Name="FK_Historico_Consulta" Association="sgcmModel.FK_Historico_Consulta">
-            <End Role="Consulta" EntitySet="Consulta" />
-            <End Role="historico" EntitySet="historico" />
-          </AssociationSet>
           <AssociationSet Name="FK_Historico_Paciente" Association="sgcmModel.FK_Historico_Paciente">
             <End Role="Paciente" EntitySet="Paciente" />
             <End Role="historico" EntitySet="historico" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Exame_Medico" Association="sgcmModel.FK_Exame_Medico">
+            <End Role="Medico" EntitySet="Medico" />
+            <End Role="Exame" EntitySet="exame" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Historico_Medico" Association="sgcmModel.FK_Historico_Medico">
+            <End Role="Medico" EntitySet="Medico" />
+            <End Role="Historico" EntitySet="historico" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receita_Medico" Association="sgcmModel.FK_Receita_Medico">
+            <End Role="Medico" EntitySet="Medico" />
+            <End Role="Receita" EntitySet="receita" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Agenda">
@@ -608,9 +612,6 @@
           <Property Name="DataFim" Type="DateTime" />
           <NavigationProperty Name="Medico" Relationship="sgcmModel.FK_consulta_medico" FromRole="consulta" ToRole="medico" />
           <NavigationProperty Name="Paciente" Relationship="sgcmModel.FK_consulta_paciente" FromRole="Consulta" ToRole="paciente" />
-          <NavigationProperty Name="Receitas" Relationship="sgcmModel.FK_Receita_Consulta" FromRole="Consulta" ToRole="receita" />
-          <NavigationProperty Name="Exames" Relationship="sgcmModel.FK_Exame_Consulta" FromRole="Consulta" ToRole="Exame" />
-          <NavigationProperty Name="Historicos" Relationship="sgcmModel.FK_Historico_Consulta" FromRole="Consulta" ToRole="historico" />
           <Property Name="Situacao" Type="sgcmModel.SituacaoConsulta" Nullable="false" />
         </EntityType>
         <Association Name="FK_agenda_01">
@@ -695,8 +696,8 @@
           <Property Name="Situacao" Type="sgcmModel.SituacaoExame" />
           <NavigationProperty Name="Paciente" Relationship="sgcmModel.FK_Exame_Paciente" FromRole="Exame" ToRole="Paciente" />
           <NavigationProperty Name="TipoExame" Relationship="sgcmModel.FK_Exame_TipoExame" FromRole="Exame" ToRole="tipo_exame" />
-          <Property Name="ConsultaId" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Consulta" Relationship="sgcmModel.FK_Exame_Consulta" FromRole="Exame" ToRole="Consulta" />
+          <Property Name="MedicoId" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Medico" Relationship="sgcmModel.FK_Exame_Medico" FromRole="Exame" ToRole="Medico" />
         </EntityType>
         <EntityType Name="ItemReceita">
           <Key>
@@ -715,23 +716,12 @@
           </Key>
           <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
           <Property Name="PacienteId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
-          <Property Name="ConsultaId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Consulta" Relationship="sgcmModel.FK_Receita_Consulta" FromRole="receita" ToRole="Consulta" />
           <NavigationProperty Name="ItemReceita" Relationship="sgcmModel.FK_ItemReceita_Receita" FromRole="receita" ToRole="item_receita" />
           <NavigationProperty Name="Paciente" Relationship="sgcmModel.FK_Receita_Paciente" FromRole="receita" ToRole="Paciente" />
+          <Property Name="MedicoId" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Data" Type="DateTime" />
+          <NavigationProperty Name="Medico" Relationship="sgcmModel.FK_Receita_Medico" FromRole="Receita" ToRole="Medico" />
         </EntityType>
-        <Association Name="FK_Receita_Consulta">
-          <End Type="sgcmModel.Consulta" Role="Consulta" Multiplicity="1" />
-          <End Type="sgcmModel.Receita" Role="receita" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Consulta">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="receita">
-              <PropertyRef Name="ConsultaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ItemReceita_Medicamento">
           <End Type="sgcmModel.Medicamento" Role="Medicamento" Multiplicity="0..1" />
           <End Type="sgcmModel.ItemReceita" Role="item_receita" Multiplicity="*" />
@@ -801,42 +791,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Exame_Consulta">
-          <End Type="sgcmModel.Consulta" Role="Consulta" Multiplicity="0..1" />
-          <End Type="sgcmModel.Exame" Role="Exame" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Consulta">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Exame">
-              <PropertyRef Name="ConsultaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Historico">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
-          <Property Name="ConsultaId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
           <Property Name="PacienteId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
           <Property Name="Data" Type="DateTime" Nullable="false" />
           <Property Name="Descricao" Type="String" MaxLength="1073741823" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Consulta" Relationship="sgcmModel.FK_Historico_Consulta" FromRole="historico" ToRole="Consulta" />
           <NavigationProperty Name="Paciente" Relationship="sgcmModel.FK_Historico_Paciente" FromRole="historico" ToRole="Paciente" />
+          <Property Name="MedicoId" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Medico" Relationship="sgcmModel.FK_Historico_Medico" FromRole="Historico" ToRole="Medico" />
         </EntityType>
-        <Association Name="FK_Historico_Consulta">
-          <End Type="sgcmModel.Consulta" Role="Consulta" Multiplicity="1" />
-          <End Type="sgcmModel.Historico" Role="historico" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Consulta">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="historico">
-              <PropertyRef Name="ConsultaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Historico_Paciente">
           <End Type="sgcmModel.Paciente" Role="Paciente" Multiplicity="1" />
           <End Type="sgcmModel.Historico" Role="historico" Multiplicity="*" />
@@ -846,6 +812,42 @@
             </Principal>
             <Dependent Role="historico">
               <PropertyRef Name="PacienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Exame_Medico">
+          <End Type="sgcmModel.Medico" Role="Medico" Multiplicity="0..1" />
+          <End Type="sgcmModel.Exame" Role="Exame" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medico">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Exame">
+              <PropertyRef Name="MedicoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Historico_Medico">
+          <End Type="sgcmModel.Medico" Role="Medico" Multiplicity="0..1" />
+          <End Type="sgcmModel.Historico" Role="Historico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medico">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Historico">
+              <PropertyRef Name="MedicoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receita_Medico">
+          <End Type="sgcmModel.Medico" Role="Medico" Multiplicity="0..1" />
+          <End Type="sgcmModel.Receita" Role="Receita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medico">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Receita">
+              <PropertyRef Name="MedicoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -969,7 +971,7 @@
           <EntitySetMapping Name="exame">
             <EntityTypeMapping TypeName="sgcmModel.Exame">
               <MappingFragment StoreEntitySet="exame">
-                <ScalarProperty Name="ConsultaId" ColumnName="ConsultaId" />
+                <ScalarProperty Name="MedicoId" ColumnName="MedicoId" />
                 <ScalarProperty Name="Situacao" ColumnName="Situacao" />
                 <ScalarProperty Name="PacienteId" ColumnName="PacienteId" />
                 <ScalarProperty Name="TipoExameId" ColumnName="TipoExameId" />
@@ -990,7 +992,8 @@
           <EntitySetMapping Name="receita">
             <EntityTypeMapping TypeName="sgcmModel.Receita">
               <MappingFragment StoreEntitySet="receita">
-                <ScalarProperty Name="ConsultaId" ColumnName="ConsultaId" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="MedicoId" ColumnName="MedicoId" />
                 <ScalarProperty Name="PacienteId" ColumnName="PacienteId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -1007,10 +1010,10 @@
           <EntitySetMapping Name="historico">
             <EntityTypeMapping TypeName="sgcmModel.Historico">
               <MappingFragment StoreEntitySet="historico">
+                <ScalarProperty Name="MedicoId" ColumnName="MedicoId" />
                 <ScalarProperty Name="Descricao" ColumnName="Descricao" />
                 <ScalarProperty Name="Data" ColumnName="Data" />
                 <ScalarProperty Name="PacienteId" ColumnName="PacienteId" />
-                <ScalarProperty Name="ConsultaId" ColumnName="ConsultaId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

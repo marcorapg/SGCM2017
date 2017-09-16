@@ -15,12 +15,12 @@ namespace SGCM.Models
     public partial class Historico
     {
         public string Id { get; set; }
-        public string ConsultaId { get; set; }
         public string PacienteId { get; set; }
         public System.DateTime Data { get; set; }
         public string Descricao { get; set; }
+        public string MedicoId { get; set; }
     
-        public virtual Consulta Consulta { get; set; }
         public virtual Paciente Paciente { get; set; }
+        public virtual Medico Medico { get; set; }
     }
 }

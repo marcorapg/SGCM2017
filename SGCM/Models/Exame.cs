@@ -18,10 +18,10 @@ namespace SGCM.Models
         public string TipoExameId { get; set; }
         public string PacienteId { get; set; }
         public Nullable<SGCM.Models.SituacaoExame> Situacao { get; set; }
-        public string ConsultaId { get; set; }
+        public string MedicoId { get; set; }
     
         public virtual Paciente Paciente { get; set; }
         public virtual TipoExame TipoExame { get; set; }
-        public virtual Consulta Consulta { get; set; }
+        public virtual Medico Medico { get; set; }
     }
 }

@@ -7,11 +7,6 @@
                 @Html.DisplayFor(prop => prop.Medicamento.Descricao)
             </h4>
         </div>
-        <div class="col-md-1 text-right">
-            <a class="btn btn-primary btn-sm" href="@Url.Action("Excluir", new { id = Model.Id })" role="button" data-toggle="tooltip" data-placement="auto" title="Excluir">
-                <span class="glyphicon glyphicon-trash" aria-hidden="true" />
-            </a>
-        </div>
     </div>
     <div class="col-md-12">
         <p class="list-group-item-text">

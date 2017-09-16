@@ -1,0 +1,81 @@
+﻿@model Receita
+
+@section Scripts {
+    <script type="text/javascript">
+        //Autocomplete paciente
+        $("#Paciente").autocomplete({
+            source: "/SGCM/Paciente/BuscarPacienteAutocomplete",
+            minLength: 1,
+            select: function (event, ui) {
+                $('#PacienteId').val(ui.item.id);
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $(event.target).val("");
+                    $('#PacienteId').val("");
+                }
+            },
+            focus: function (event, ui) {
+                return false;
+            }
+        });
+
+        //Autocomplete médico
+        $("#Medico").autocomplete({
+            source: "/SGCM/Medico/BuscarMedicoAutocomplete",
+            minLength: 1,
+            select: function (event, ui) {
+                $('#MedicoId').val(ui.item.id);
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $(event.target).val("");
+                    $('#MedicoId').val("");
+                }
+            },
+            focus: function (event, ui) {
+                return false;
+            }
+        });
+    </script>
+}
+
+@{
+    ViewBag.Title = "Alterar Medicamento";
+}
+
+<h2>Alterar Medicamento</h2>
+
+@using (Html.BeginForm("Alterar", "Medicamento", FormMethod.Post, new { @class = "form-inline" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.Id)
+
+    <input id="PacienteId" name="PacienteId" type="hidden" data-val="true" data-val-required="Selecione um paciente cadastrado.">
+    <input id="MedicoId" name="MedicoId" type="hidden" data-val="true" data-val-required="Selecione um médico cadastrado.">
+
+    <fieldset class="border">
+        <legend class="border">Informações</legend>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.Data, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Data, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Data, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            <label class="control-label" for="Paciente">Paciente</label>
+            <input class="form-control text-box single-line" type="text" id="Paciente" name="Paciente" required data-toggle="tooltip" data-placement="top" title="Começe a digitar o nome do paciente e selecione um item da lista exibida.">
+            <span class="field-validation-valid text-danger" data-valmsg-for="PacienteId" data-valmsg-replace="true"></span>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label class="control-label" for="Paciente">Medicamento</label>
+            <input class="form-control text-box single-line" type="text" id="Medicamento" name="Medicamento" required data-toggle="tooltip" data-placement="top" title="Começe a digitar o nome do médico e selecione um item da lista exibida.">
+            <span class="field-validation-valid text-danger" data-valmsg-for="MedicamentoId" data-valmsg-replace="true"></span>
+        </div>
+    </fieldset>
+
+    @Html.Partial("_BotoesCRUDPadrao")
+}

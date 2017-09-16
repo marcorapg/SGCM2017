@@ -143,5 +143,14 @@ namespace SGCM.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public ActionResult BuscarMedicoAutocomplete(string term)
+        {
+            var listaMedicos = medicos.FindBy(prop => prop.Nome.ToUpper().StartsWith(term.ToUpper()))
+                                      .Select(prop => new { id = prop.Id, label = prop.Nome })
+                                      .ToArray();
+
+            return Json(listaMedicos, JsonRequestBehavior.AllowGet);
+        }
     }
 }

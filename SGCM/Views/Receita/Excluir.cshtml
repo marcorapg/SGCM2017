@@ -1,0 +1,28 @@
+﻿@model Medicamento
+
+@{
+    ViewBag.Title = "Excluir Medicamento";
+}
+
+<h2>Excluir Medicamento</h2>
+
+<h3>Você tem certeza que deseja excluir este registro?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>@Html.DisplayNameFor(model => model.NomeGenerico)</dt>
+        <dd>@Html.DisplayFor(model => model.NomeGenerico)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.NomeFabrica)</dt>
+        <dd>@Html.DisplayFor(model => model.NomeFabrica)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.NomeFabricante)</dt>
+        <dd>@Html.DisplayFor(model => model.NomeFabricante)</dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.Partial("_BotoesExclusaoPadrao")
+    }
+</div>

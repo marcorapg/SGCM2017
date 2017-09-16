@@ -19,6 +19,9 @@ namespace SGCM.Models
         {
             this.Agenda = new HashSet<Agenda>();
             this.Consulta = new HashSet<Consulta>();
+            this.exame = new HashSet<Exame>();
+            this.historico = new HashSet<Historico>();
+            this.receita = new HashSet<Receita>();
         }
     
         public string Id { get; set; }
@@ -37,5 +40,11 @@ namespace SGCM.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Consulta> Consulta { get; set; }
         public virtual Usuario Usuario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Exame> exame { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Historico> historico { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Receita> receita { get; set; }
     }
 }
